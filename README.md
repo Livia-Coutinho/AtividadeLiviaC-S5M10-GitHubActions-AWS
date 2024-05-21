@@ -87,15 +87,44 @@ Exemplo prático de como um workflow do GitHub Actions pode ser usado para um de
 
 ## A função e a importância do AWS CloudFormation na automação da infraestrutura. Anexe e explique o template que você está usando no seu projeto para criar a instância EC2.
 
-sahd
+O AWS CloudFormation é uma ferramenta fundamental para automatizar a criação e gerenciamento da infraestrutura na nuvem da Amazon. Com ele, é possível definir toda a infraestrutura como código, o que significa que podemos descrever os recursos necessários em um arquivo e provisioná-los de maneira consistente e escalável. Isso simplifica muito o processo de implantação, garantindo que a infraestrutura seja replicável e controlada por versão. Em resumo, o CloudFormation é essencial para automatizar a infraestrutura na nuvem, trazendo eficiência e confiabilidade para os projetos.
+</br>
+</br>
+
+![alt text](image.png)
+Acima temos um print do código que está sendo utilizado pelo grupo 5 para a automatização da criação e configuração de uma instância EC2 que hospeda um servidor web básico.
+
+</br>
+
+- Utiliza uma imagem AMI específica e uma instância de tipo t3.medium.
+- É associada a um par de chaves para acesso SSH.
+- É implantada em uma sub-rede específica e associada a um grupo de segurança.
+- Inclui um volume EBS para armazenamento, configurado para ser excluído ao terminar a instância.
+- Executa um script de inicialização que instala o servidor web Apache, configura-o para ouvir na porta 8080, cria uma página HTML simples e reinicia o serviço Apache.
+- A instância é identificada com a tag Name definida como ec2_instance_g5.
 
 ## Discuta como a integração de GitHub Actions com AWS CloudFormation e Amazon EC2 pode ser aplicada em projetos reais. Quais desafios você encontrou no seu projeto e como os solucionou?
-uhsue
 
+A integração de GitHub Actions com AWS CloudFormation e Amazon EC2 é uma ótima combinação para automatizar e gerenciar a infraestrutura de projetos reais. </br>
+O GitHub Actions permite criar fluxos de trabalho automáticos que podem ser acionados por eventos no repositório, como push ou pull requests. Quando integrado com AWS CloudFormation, é possível definir a infraestrutura como código, o que facilita a replicação, atualização e manutenção do ambiente de desenvolvimento e produção.
 
+Por exemplo, em um projeto, pode-se configurar um GitHub Action para, automaticamente, iniciar um template do CloudFormation sempre que houver uma atualização no código. Esse template pode descrever os recursos necessários, como instâncias EC2, bancos de dados, redes etc. </br>
+Assim, toda vez que um desenvolvedor fizer uma alteração no código e essa mudança for mergeada na branch principal, o GitHub Action dispara, o CloudFormation atualiza a infraestrutura e a nova versão do aplicativo é implantada nas instâncias EC2.
 
+Isso não só automatiza o processo de implantação, mas também garante consistência e controle de versão da infraestrutura, reduzindo erros humanos e aumentando a eficiência. Em suma, essa integração é útil para qualquer projeto que precise de implantação contínua e gerenciamento de infraestrutura em nuvem.
 
+**Desafios - Grupo 5:**
 
+- **Complexidade na integração:** a integração inicial entre GitHub Actions, AWS CloudFormation e CodeDeploy demandou um conhecimento aprofundado de cada serviço e de suas interações.
 
+- **Segurança na configuração:** assegurar a gestão segura de segredos e credenciais, evitando que os segredos da AWS fossem expostos.
 
+- **Configurações incorretas:** problemas na configuração dos templates do CloudFormation podem causar falhas na criação de recursos, o que ocasiona atrasos no processo.
 
+**Soluções - Grupo 5**
+
+- **Documentação e automação de scripts:** uma solução foi o desenvolvimento de  scripts e documentações detalhados para automatizar e documentar cada etapa do processo de integração, o que facilita tanto a configuração quanto a resolução de problemas.
+
+- **Implementação de OIDC e IAM Roles:** isso foi feito com o intuito de aumentar a segurança, o que permitiu que o GitHub Actions interagisse com a AWS sem a necessidade de armazenar credenciais longas.
+
+- **Validação de templates:** visando minimizar erros de configuração, utilizamos ferramentas de validação e linting. Isso assegurou que os templates do CloudFormation estivessem corretos antes da sua aplicação.
